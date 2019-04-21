@@ -3,10 +3,7 @@ package ru.myuniversity.admissionrest.model.question;
 import ru.myuniversity.admissionrest.entity.*;
 import ru.myuniversity.admissionrest.model.answer.AnswerVariant;
 
-import java.util.AbstractCollection;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 public class QuestionPOJOToEntityMapper implements QuestionVisitor {
     private QuestionEntity result;
@@ -36,15 +33,15 @@ public class QuestionPOJOToEntityMapper implements QuestionVisitor {
         ((VariantsQuestionEntity) result).setAnswerVariants(getAnswerVariants(radioQuestion));
     }
 
-    private Set<AnswerVariantEntity> getAnswerVariants(VariantsQuestion question) {
-        Set<AnswerVariantEntity> variants = getPartVariants(question.getVariants().getCorrect(), true);
+    private List<AnswerVariantEntity> getAnswerVariants(VariantsQuestion question) {
+        List<AnswerVariantEntity> variants = getPartVariants(question.getVariants().getCorrect(), true);
         variants.addAll(getPartVariants(question.getVariants().getOther(), false));
         return variants;
     }
 
-    private Set<AnswerVariantEntity> getPartVariants(List<AnswerVariant> variants, boolean isCorrect) {
+    private List<AnswerVariantEntity> getPartVariants(List<AnswerVariant> variants, boolean isCorrect) {
         return variants.stream()
-                .collect(HashSet::new,
+                .collect(ArrayList::new,
                         (set, item) -> {
                             AnswerVariantEntity answerVariantEntity = new AnswerVariantEntity(item.getText(), isCorrect);
                             set.add(answerVariantEntity);

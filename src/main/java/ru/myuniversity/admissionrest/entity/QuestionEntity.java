@@ -11,6 +11,14 @@ public abstract class QuestionEntity {
     @Column(name = "id")
     private int id;
 
+    @ManyToOne(fetch = FetchType.EAGER,
+            cascade = {CascadeType.DETACH,
+                    CascadeType.MERGE,
+                    CascadeType.PERSIST,
+                    CascadeType.REFRESH})
+    @JoinColumn(name = "test_id")
+    private TestEntity test;
+
     @Column(name = "description")
     private String description;
 
@@ -50,6 +58,14 @@ public abstract class QuestionEntity {
 
     public void setWeight(double weight) {
         this.weight = weight;
+    }
+
+    public TestEntity getTest() {
+        return test;
+    }
+
+    public void setTest(TestEntity test) {
+        this.test = test;
     }
 
     @Override

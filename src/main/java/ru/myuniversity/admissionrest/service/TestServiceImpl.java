@@ -2,29 +2,43 @@ package ru.myuniversity.admissionrest.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import ru.myuniversity.admissionrest.dao.TestDao;
+import ru.myuniversity.admissionrest.repository.QuestionRepository;
+import ru.myuniversity.admissionrest.repository.TestRepository;
+import ru.myuniversity.admissionrest.entity.QuestionEntity;
+import ru.myuniversity.admissionrest.entity.QuestionEntityToPojoMapper;
+import ru.myuniversity.admissionrest.entity.TestEntity;
 import ru.myuniversity.admissionrest.model.question.Question;
+import ru.myuniversity.admissionrest.model.question.QuestionPOJOToEntityMapper;
 import ru.myuniversity.admissionrest.model.test.Test;
 
 import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class TestServiceImpl implements TestService {
-    private TestDao testDao;
+    private TestRepository testRepository;
+    private QuestionRepository questionRepository;
 
     @Autowired
-    public TestServiceImpl(TestDao testDao) {
-        this.testDao = testDao;
+    public TestServiceImpl(TestRepository testRepository,
+                           QuestionRepository questionRepository) {
+        this.testRepository = testRepository;
+        this.questionRepository = questionRepository;
     }
 
     @Override
     public int createTest(Test test) {
-        return testDao.createTest(test);
+        TestEntity testEntity = new TestEntity(test.getTitle());
+        return testRepository.save(testEntity).getId();
     }
 
     @Override
     public List<Test> getTests() {
-        return testDao.getTests();
+        return testRepository.findAll()
+                .stream()
+                .map((testEntity) -> new Test(testEntity.getId(), testEntity.getTitle()))
+                .collect(Collectors.toList());
     }
 
     @Override
@@ -34,32 +48,54 @@ public class TestServiceImpl implements TestService {
 
     @Override
     public void updateTest(Test test) {
-        testDao.updateTest(test);
+        TestEntity testEntity = new TestEntity(test.getId(), test.getTitle());
+        testRepository.save(testEntity);
     }
 
     @Override
     public void deleteTest(int testId) {
-        testDao.deleteTest(testId);
+        testRepository.deleteById(testId);
     }
 
     @Override
     public void createQuestion(int testId, Question question) {
-        testDao.createQuestion(testId, question);
+        Optional<TestEntity> testOptional = testRepository.findById(testId);
+        if (testOptional.isPresent()) {
+            TestEntity testEntity = testOptional.get();
+            QuestionEntity questionEntity = QuestionPOJOToEntityMapper.map(question);
+            testEntity.addQuestion(questionEntity);
+            questionRepository.save(questionEntity);
+        }
     }
 
     @Override
     public List<Question> getQuestions(int testId) {
-        return testDao.getQuestions(testId);
+        Optional<TestEntity> testOptional = testRepository.findById(testId);
+        if (testOptional.isPresent()) {
+            TestEntity testEntity = testOptional.get();
+            List<Question> questions = testEntity.getQuestions()
+                    .stream()
+                    .map(QuestionEntityToPojoMapper::map)
+                    .collect(Collectors.toList());
+            return questions;
+        } else {
+            return null;
+        }
     }
 
     @Override
     public void updateQuestion(int testId, Question question) {
-        testDao.updateQuestion(testId, question);
+        if (checkQuestionBelongsToTest(testId, question.getId())) {
+            QuestionEntity questionEntity = QuestionPOJOToEntityMapper.map(question);
+            questionRepository.save(questionEntity);
+        }
     }
 
     @Override
     public void deleteQuestion(int testId, int questionId) {
-        testDao.deleteQuestion(testId, questionId);
+        if (checkQuestionBelongsToTest(testId, questionId)) {
+            questionRepository.deleteById(questionId);
+        }
     }
 
     @Override
@@ -75,5 +111,14 @@ public class TestServiceImpl implements TestService {
     @Override
     public double finishTest(int testId) {
         return 0;
+    }
+
+    private boolean checkQuestionBelongsToTest(int testId, int questionId) {
+        Optional<QuestionEntity> questionOptional = questionRepository.findById(questionId);
+        if (questionOptional.isPresent()) {
+            return questionOptional.get().getTest().getId() == testId;
+        } else {
+            return false;
+        }
     }
 }

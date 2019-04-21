@@ -2,7 +2,6 @@ package ru.myuniversity.admissionrest.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import ru.myuniversity.admissionrest.dao.TestDao;
 import ru.myuniversity.admissionrest.http.request.TestsRequestBody;
 import ru.myuniversity.admissionrest.http.request.answer.NewAnswerRequestBody;
 import ru.myuniversity.admissionrest.http.request.question.QuestionRequestBody;
@@ -22,63 +21,63 @@ import java.util.stream.Collectors;
 @RequestMapping("/api")
 public class TestRestController {
 
-    private TestDao testDao;
+    private TestService testService;
 
     @Autowired
-    public TestRestController(TestDao testDao) {
-        this.testDao = testDao;
+    public TestRestController(TestService testService) {
+        this.testService = testService;
     }
 
     @PostMapping("/tests")
     public Map<String, Integer> createTest(@RequestBody TestsRequestBody body) {
-        int id = testDao.createTest(new Test(body.getTitle()));
+        int id = testService.createTest(new Test(body.getTitle()));
         return Collections.singletonMap("test_id", id);
     }
 
     @GetMapping("/tests")
     public List<TestsResponseElement> getTests() {
         // retrieve tests and try to get grade for each test
-        return testDao.getTests().stream()
-                .map(test -> new TestsResponseElement(test, testDao.getTestGrade(test.getId())))
+        return testService.getTests().stream()
+                .map(test -> new TestsResponseElement(test, testService.getTestGrade(test.getId())))
                 .collect(Collectors.toList());
     }
 
     @PutMapping("/tests/{testId}")
     public void updateTest(@PathVariable int testId, @RequestBody TestsRequestBody body) {
-        testDao.updateTest(new Test(testId, body.getTitle()));
+        testService.updateTest(new Test(testId, body.getTitle()));
     }
 
     @DeleteMapping("/tests/{testId}")
     public void deleteTest(@PathVariable int testId) {
-        testDao.deleteTest(testId);
+        testService.deleteTest(testId);
     }
 
     @PostMapping("/tests/{testId}/questions")
     public void createQuestion(@PathVariable int testId, @RequestBody QuestionRequestBody questionBody) {
-        testDao.createQuestion(testId, QuestionsRequestToPOJOMapper.map(questionBody));
+        testService.createQuestion(testId, QuestionsRequestToPOJOMapper.map(questionBody));
     }
 
     @GetMapping("/tests/{testId}/questions")
     public List<Question> getQuestions(@PathVariable int testId) {
-        return testDao.getQuestions(testId);
+        return testService.getQuestions(testId);
     }
 
     @PutMapping("/tests/{testId}/questions/{questionId}")
     public void updateQuestion(@PathVariable int testId, @PathVariable int questionId, @RequestBody QuestionRequestBody questionBody) {
-        testDao.updateQuestion(testId, constructQuestionToUpdate(questionId, questionBody));
+        testService.updateQuestion(testId, constructQuestionToUpdate(questionId, questionBody));
     }
 
     @DeleteMapping("/tests/{testId}/questions/{questionId}")
     public void deleteQuestion(@PathVariable int testId, @PathVariable int questionId) {
-        testDao.deleteQuestion(testId, questionId);
+        testService.deleteQuestion(testId, questionId);
     }
 
     @PostMapping("/tests/{testId}/questions/{questionId}/answer")
     public void submitAnswer(@PathVariable int testId, @PathVariable int questionId, @RequestBody NewAnswerRequestBody answerBody) {
         if (answerBody.getTextAnswer() != null) {
-            testDao.submitTextAnswer(testId, questionId, answerBody.getTextAnswer());
+            testService.submitTextAnswer(testId, questionId, answerBody.getTextAnswer());
         } else if (answerBody.getChosenVariantIds() != null) {
-            testDao.submitVariantsListAnswer(testId, questionId, answerBody.getChosenVariantIds());
+            testService.submitVariantsListAnswer(testId, questionId, answerBody.getChosenVariantIds());
         } else {
             System.out.println("Incorrect body");
         }
@@ -86,7 +85,7 @@ public class TestRestController {
 
     @PutMapping("/tests/{testId}/finish")
     public GradeResponse finishTestAttempt(@PathVariable int testId) {
-        return new GradeResponse(testDao.finishTest(testId));
+        return new GradeResponse(testService.finishTest(testId));
     }
 
     private Question constructQuestionToUpdate(int questionId, QuestionRequestBody questionBody) {

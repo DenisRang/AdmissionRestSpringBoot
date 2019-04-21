@@ -1,7 +1,9 @@
 package ru.myuniversity.admissionrest.entity;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -17,9 +19,9 @@ public class TestEntity {
     private String title;
 
     @OneToMany(fetch = FetchType.LAZY,
-            cascade = {CascadeType.ALL})
-    @JoinColumn(name = "test_id")
-    private Set<QuestionEntity> questions = new HashSet<>();
+            cascade = {CascadeType.ALL},
+            mappedBy = "test")
+    private List<QuestionEntity> questions = new ArrayList<>();
 
     public TestEntity() {
     }
@@ -50,11 +52,11 @@ public class TestEntity {
         this.title = title;
     }
 
-    public Set<QuestionEntity> getQuestions() {
+    public List<QuestionEntity> getQuestions() {
         return questions;
     }
 
-    public void setQuestions(Set<QuestionEntity> questions) {
+    public void setQuestions(List<QuestionEntity> questions) {
         this.questions = questions;
     }
 
