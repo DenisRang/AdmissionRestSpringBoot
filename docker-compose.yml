@@ -1,0 +1,25 @@
+version : '2'
+services:
+
+  springappserver:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+    container_name: springappserver
+    depends_on:
+      - mysqldbserver
+
+  mysqldbserver:
+    image: mysql:5.6
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_DATABASE: web_admission
+      MYSQL_USER: springuser
+      MYSQL_PASSWORD: springuser
+      MYSQL_ROOT_PASSWORD: 12345678
+    container_name: mysqldbserver
+
+
