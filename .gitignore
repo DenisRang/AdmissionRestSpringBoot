@@ -97,3 +97,7 @@ fabric.properties
 Будет удалено target/maven-archiver/
 Будет удалено target/maven-status/
 Будет удалено target/surefire-reports/
+Будет удалено .mvn/
+Будет удалено target/admission-rest-0.0.1-SNAPSHOT.jar
+Будет удалено src/main/resources/static/
+Будет удалено src/main/resources/templates/
