@@ -63,39 +63,34 @@ public class TestServiceImpl implements TestService {
         if (testOptional.isPresent()) {
             TestEntity testEntity = testOptional.get();
             QuestionEntity questionEntity = QuestionPOJOToEntityMapper.map(question);
-            testEntity.addQuestion(questionEntity);
+            questionEntity.setTest(testEntity);
             questionRepository.save(questionEntity);
         }
     }
 
     @Override
     public List<Question> getQuestions(int testId) {
-        Optional<TestEntity> testOptional = testRepository.findById(testId);
-        if (testOptional.isPresent()) {
-            TestEntity testEntity = testOptional.get();
-            List<Question> questions = testEntity.getQuestions()
-                    .stream()
-                    .map(QuestionEntityToPojoMapper::map)
-                    .collect(Collectors.toList());
-            return questions;
-        } else {
-            return null;
-        }
+        List<Question> questions = questionRepository.findQuestionsOfTest(testId)
+                .stream()
+                .map(QuestionEntityToPojoMapper::map)
+                .collect(Collectors.toList());
+        return questions;
     }
 
     @Override
     public void updateQuestion(int testId, Question question) {
-        if (checkQuestionBelongsToTest(testId, question.getId())) {
+        Optional<TestEntity> testOptional = testRepository.findById(testId);
+        if (testOptional.isPresent()) {
             QuestionEntity questionEntity = QuestionPOJOToEntityMapper.map(question);
+            questionEntity.setId(question.getId());
+            questionEntity.setTest(testOptional.get());
             questionRepository.save(questionEntity);
         }
     }
 
     @Override
     public void deleteQuestion(int testId, int questionId) {
-        if (checkQuestionBelongsToTest(testId, questionId)) {
-            questionRepository.deleteById(questionId);
-        }
+        questionRepository.deleteQuestionOfTestById(testId,questionId);
     }
 
     @Override
@@ -111,14 +106,5 @@ public class TestServiceImpl implements TestService {
     @Override
     public double finishTest(int testId) {
         return 0;
-    }
-
-    private boolean checkQuestionBelongsToTest(int testId, int questionId) {
-        Optional<QuestionEntity> questionOptional = questionRepository.findById(questionId);
-        if (questionOptional.isPresent()) {
-            return questionOptional.get().getTest().getId() == testId;
-        } else {
-            return false;
-        }
     }
 }

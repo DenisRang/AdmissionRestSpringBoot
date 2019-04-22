@@ -1,5 +1,6 @@
 package ru.myuniversity.admissionrest.entity;
 
+
 import javax.persistence.*;
 
 @Entity
@@ -11,7 +12,7 @@ public abstract class QuestionEntity {
     @Column(name = "id")
     private int id;
 
-    @ManyToOne(fetch = FetchType.EAGER,
+    @ManyToOne(fetch = FetchType.LAZY,
             cascade = {CascadeType.DETACH,
                     CascadeType.MERGE,
                     CascadeType.PERSIST,

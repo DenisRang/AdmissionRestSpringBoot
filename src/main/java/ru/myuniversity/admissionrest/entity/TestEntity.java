@@ -1,10 +1,7 @@
 package ru.myuniversity.admissionrest.entity;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 @Entity
 @Table(name = "test")
@@ -18,11 +15,6 @@ public class TestEntity {
     @Column(name = "title")
     private String title;
 
-    @OneToMany(fetch = FetchType.LAZY,
-            cascade = {CascadeType.ALL},
-            mappedBy = "test")
-    private List<QuestionEntity> questions = new ArrayList<>();
-
     public TestEntity() {
     }
 
@@ -34,7 +26,6 @@ public class TestEntity {
         this.title = title;
         this.id = id;
     }
-
 
     public int getId() {
         return id;
@@ -52,24 +43,11 @@ public class TestEntity {
         this.title = title;
     }
 
-    public List<QuestionEntity> getQuestions() {
-        return questions;
-    }
-
-    public void setQuestions(List<QuestionEntity> questions) {
-        this.questions = questions;
-    }
-
-    public void addQuestion(QuestionEntity question) {
-        questions.add(question);
-    }
-
     @Override
     public String toString() {
         return "TestEntity{" +
                 "id=" + id +
                 ", title='" + title + '\'' +
-                ", questions=" + questions +
                 '}';
     }
 }
