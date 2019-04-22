@@ -1,10 +1,10 @@
-package ru.myuniversity.admissionrest.entity;
+package ru.myuniversity.admissionrest.entity.question;
+
+import ru.myuniversity.admissionrest.entity.AnswerVariantEntity;
 
 import javax.persistence.*;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 @MappedSuperclass
 public abstract class VariantsQuestionEntity extends QuestionEntity {

@@ -1,5 +1,7 @@
-package ru.myuniversity.admissionrest.entity;
+package ru.myuniversity.admissionrest.entity.question;
 
+
+import ru.myuniversity.admissionrest.entity.TestEntity;
 
 import javax.persistence.*;
 

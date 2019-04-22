@@ -1,4 +1,4 @@
-package ru.myuniversity.admissionrest.entity;
+package ru.myuniversity.admissionrest.entity.question;
 
 public interface QuestionEntityVisitor {
     void visit(TextQuestionEntity textQuestionEntity);

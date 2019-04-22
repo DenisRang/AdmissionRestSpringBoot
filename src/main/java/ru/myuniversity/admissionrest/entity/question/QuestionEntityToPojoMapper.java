@@ -1,5 +1,6 @@
-package ru.myuniversity.admissionrest.entity;
+package ru.myuniversity.admissionrest.entity.question;
 
+import ru.myuniversity.admissionrest.entity.AnswerVariantEntity;
 import ru.myuniversity.admissionrest.model.answer.AllAnswerVariants;
 import ru.myuniversity.admissionrest.model.answer.AnswerVariant;
 import ru.myuniversity.admissionrest.model.question.Question;

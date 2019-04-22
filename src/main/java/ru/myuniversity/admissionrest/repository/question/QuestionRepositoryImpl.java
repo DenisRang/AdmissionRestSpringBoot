@@ -1,9 +1,9 @@
-package ru.myuniversity.admissionrest.repository;
+package ru.myuniversity.admissionrest.repository.question;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
-import ru.myuniversity.admissionrest.entity.QuestionEntity;
+import ru.myuniversity.admissionrest.entity.question.QuestionEntity;
 
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
@@ -19,7 +19,6 @@ public class QuestionRepositoryImpl implements QuestionRepository {
     }
 
     @Override
-    @Transactional
     public List<QuestionEntity> findQuestionsOfTest(int testId) {
         List<QuestionEntity> questions = entityManager.createQuery(
                 "from QuestionEntity where test_id=:testId", QuestionEntity.class)
@@ -29,13 +28,11 @@ public class QuestionRepositoryImpl implements QuestionRepository {
     }
 
     @Override
-    @Transactional
     public QuestionEntity save(QuestionEntity questionEntity) {
         return entityManager.merge(questionEntity);
     }
 
     @Override
-    @Transactional
     public void deleteQuestionOfTestById(int testId, int questionId) {
         Query query = entityManager.createQuery("delete from QuestionEntity where test_id=:testId and id=:questionId");
         query.setParameter("testId", testId);

@@ -1,4 +1,4 @@
-package ru.myuniversity.admissionrest.entity;
+package ru.myuniversity.admissionrest.entity.question;
 
 import javax.persistence.Entity;
 import javax.persistence.Table;

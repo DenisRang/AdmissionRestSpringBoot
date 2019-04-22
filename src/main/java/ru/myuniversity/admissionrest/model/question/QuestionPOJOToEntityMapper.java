@@ -1,6 +1,7 @@
 package ru.myuniversity.admissionrest.model.question;
 
 import ru.myuniversity.admissionrest.entity.*;
+import ru.myuniversity.admissionrest.entity.question.*;
 import ru.myuniversity.admissionrest.model.answer.AnswerVariant;
 
 import java.util.*;

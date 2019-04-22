@@ -2,10 +2,10 @@ package ru.myuniversity.admissionrest.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import ru.myuniversity.admissionrest.repository.QuestionRepository;
+import ru.myuniversity.admissionrest.repository.question.QuestionRepository;
 import ru.myuniversity.admissionrest.repository.TestRepository;
-import ru.myuniversity.admissionrest.entity.QuestionEntity;
-import ru.myuniversity.admissionrest.entity.QuestionEntityToPojoMapper;
+import ru.myuniversity.admissionrest.entity.question.QuestionEntity;
+import ru.myuniversity.admissionrest.entity.question.QuestionEntityToPojoMapper;
 import ru.myuniversity.admissionrest.entity.TestEntity;
 import ru.myuniversity.admissionrest.model.question.Question;
 import ru.myuniversity.admissionrest.model.question.QuestionPOJOToEntityMapper;

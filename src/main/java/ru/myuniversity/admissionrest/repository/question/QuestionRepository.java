@@ -1,8 +1,6 @@
-package ru.myuniversity.admissionrest.repository;
+package ru.myuniversity.admissionrest.repository.question;
 
-import org.springframework.data.jpa.repository.JpaRepository;
-import ru.myuniversity.admissionrest.entity.QuestionEntity;
-import ru.myuniversity.admissionrest.model.question.Question;
+import ru.myuniversity.admissionrest.entity.question.QuestionEntity;
 
 import java.util.List;
 
