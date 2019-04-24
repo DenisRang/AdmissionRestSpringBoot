@@ -76,30 +76,17 @@ fabric.properties
 # Editor-based Rest Client
 .idea/httpRequests
 
+### Maven template
+target/
+pom.xml.tag
+pom.xml.releaseBackup
+pom.xml.versionsBackup
+pom.xml.next
+release.properties
+dependency-reduced-pom.xml
+buildNumber.properties
+.mvn/timing.properties
 
+# Avoid ignoring Maven wrapper jar file (.jar files are usually ignored)
+!/.mvn/wrapper/maven-wrapper.jar
 
-Будет удалено .idea/compiler.xml
-Будет удалено .idea/encodings.xml
-Будет удалено .idea/misc.xml
-Будет удалено .idea/vcs.xml
-Будет удалено .mvn/wrapper/MavenWrapperDownloader.java
-Будет удалено .mvn/wrapper/maven-wrapper.properties
-Будет удалено Dockerfile
-Будет удалено HELP.md
-Будет удалено admission-key.pem
-Будет удалено docker-compose.yml
-Будет удалено mvnw
-Будет удалено mvnw.cmd
-Будет удалено pom.xml
-Будет удалено src/
-Будет удалено target/admission-rest-0.0.1-SNAPSHOT.jar.original
-Будет удалено target/classes/application.properties
-Будет удалено target/generated-sources/
-Будет удалено target/generated-test-sources/
-Будет удалено target/maven-archiver/
-Будет удалено target/maven-status/
-Будет удалено target/surefire-reports/
-Будет удалено .mvn/
-Будет удалено target/admission-rest-0.0.1-SNAPSHOT.jar
-Будет удалено src/main/resources/static/
-Будет удалено src/main/resources/templates/
