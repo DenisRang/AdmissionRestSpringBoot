@@ -19,6 +19,7 @@ public class QuestionRepositoryImpl implements QuestionRepository {
     }
 
     @Override
+    @Transactional
     public List<QuestionEntity> findQuestionsOfTest(int testId) {
         List<QuestionEntity> questions = entityManager.createQuery(
                 "from QuestionEntity where test_id=:testId", QuestionEntity.class)
@@ -28,11 +29,13 @@ public class QuestionRepositoryImpl implements QuestionRepository {
     }
 
     @Override
+    @Transactional
     public QuestionEntity save(QuestionEntity questionEntity) {
         return entityManager.merge(questionEntity);
     }
 
     @Override
+    @Transactional
     public void deleteQuestionOfTestById(int testId, int questionId) {
         Query query = entityManager.createQuery("delete from QuestionEntity where test_id=:testId and id=:questionId");
         query.setParameter("testId", testId);

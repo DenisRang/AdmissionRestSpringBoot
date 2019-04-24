@@ -1,5 +1,14 @@
 package ru.myuniversity.admissionrest.model.question;
 
+import com.fasterxml.jackson.annotation.JsonSubTypes;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
+
+@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "type")
+@JsonSubTypes({
+        @JsonSubTypes.Type(value = TextQuestion.class, name = "text"),
+        @JsonSubTypes.Type(value = ChecklistQuestion.class, name = "checklist"),
+        @JsonSubTypes.Type(value = RadioQuestion.class, name = "radio"),
+})
 public abstract class Question {
     private int id;
     private String description;
