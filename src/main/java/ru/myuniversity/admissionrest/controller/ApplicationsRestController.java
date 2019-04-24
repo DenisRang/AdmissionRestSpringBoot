@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.*;
 import ru.myuniversity.admissionrest.http.request.application.ApplicationStatusBody;
 import ru.myuniversity.admissionrest.http.request.application.ApplicationStatusBodyToPojoMapper;
 import ru.myuniversity.admissionrest.http.request.application.ApplicationStatusName;
+import ru.myuniversity.admissionrest.http.request.application.CreateApplicationRequestBody;
 import ru.myuniversity.admissionrest.http.response.applications.ApplicationListResponseItem;
 import ru.myuniversity.admissionrest.http.response.applications.ApplicationResponse;
 import ru.myuniversity.admissionrest.http.response.programs.ProgramResponse;
@@ -65,5 +66,11 @@ public class ApplicationsRestController {
                         ApplicationStatusPojoToResponseMapper.map(pojoApplication.getStatus())
                 ))
                 .collect(Collectors.toList());
+    }
+
+    @PostMapping("/application")
+    public ApplicationListResponseItem createApplication(@RequestBody CreateApplicationRequestBody newApplicationBody) {
+        // TODO: auth and service
+        return null;
     }
 }

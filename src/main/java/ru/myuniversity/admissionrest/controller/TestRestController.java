@@ -7,7 +7,7 @@ import ru.myuniversity.admissionrest.http.request.answer.NewAnswerRequestBody;
 import ru.myuniversity.admissionrest.http.request.question.QuestionRequestBody;
 import ru.myuniversity.admissionrest.http.request.question.QuestionsRequestToPOJOMapper;
 import ru.myuniversity.admissionrest.http.response.GradeResponse;
-import ru.myuniversity.admissionrest.http.response.TestsResponseElement;
+import ru.myuniversity.admissionrest.http.response.tests.TestsResponseElement;
 import ru.myuniversity.admissionrest.model.question.Question;
 import ru.myuniversity.admissionrest.model.test.Test;
 import ru.myuniversity.admissionrest.service.TestService;
