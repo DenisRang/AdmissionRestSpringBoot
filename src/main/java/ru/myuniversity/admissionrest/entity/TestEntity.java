@@ -15,6 +15,9 @@ public class TestEntity {
     @Column(name = "title")
     private String title;
 
+    @ManyToMany(mappedBy = "tests")
+    private List<ProgramEntity> programs = new ArrayList<>();
+
     public TestEntity() {
     }
 
@@ -22,9 +25,9 @@ public class TestEntity {
         this.title = title;
     }
 
-    public TestEntity(int id, String title) {
+    public TestEntity(String title, List<ProgramEntity> programs) {
         this.title = title;
-        this.id = id;
+        this.programs = programs;
     }
 
     public int getId() {
@@ -43,11 +46,33 @@ public class TestEntity {
         this.title = title;
     }
 
+    public List<ProgramEntity> getPrograms() {
+        return programs;
+    }
+
+    public void setPrograms(List<ProgramEntity> programs) {
+        this.programs = programs;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        TestEntity test = (TestEntity) o;
+        return Objects.equals(id, test.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
+    }
+
     @Override
     public String toString() {
         return "TestEntity{" +
                 "id=" + id +
                 ", title='" + title + '\'' +
+                ", programs=" + programs +
                 '}';
     }
 }

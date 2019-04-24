@@ -48,8 +48,12 @@ public class TestServiceImpl implements TestService {
 
     @Override
     public void updateTest(Test test) {
-        TestEntity testEntity = new TestEntity(test.getId(), test.getTitle());
-        testRepository.save(testEntity);
+        Optional<TestEntity> optTestEntity = testRepository.findById(test.getId());
+        if (optTestEntity.isPresent()) {
+            TestEntity testEntity=optTestEntity.get();
+            testEntity.setTitle(test.getTitle());
+            testRepository.save(testEntity);
+        }
     }
 
     @Override
