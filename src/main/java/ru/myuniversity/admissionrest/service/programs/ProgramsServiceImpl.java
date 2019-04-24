@@ -21,8 +21,9 @@ public class ProgramsServiceImpl implements ProgramsService {
     }
 
     @Override
-    public void createProgram(Program newProgramInfo) {
+    public Program createProgram(Program newProgramInfo) {
         // TODO: Repository
+        return newProgramInfo;
     }
 
     @Override

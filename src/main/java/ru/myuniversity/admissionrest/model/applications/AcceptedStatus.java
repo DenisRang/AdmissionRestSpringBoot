@@ -46,4 +46,9 @@ public class AcceptedStatus extends ApplicationStatus {
     public void accept(ApplicationStatusVisitor visitor) {
         visitor.visit(this);
     }
+
+    @Override
+    public StringKey getKey() {
+        return StringKey.ACCEPTED;
+    }
 }

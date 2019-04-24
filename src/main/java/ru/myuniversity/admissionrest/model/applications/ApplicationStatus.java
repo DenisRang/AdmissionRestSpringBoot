@@ -39,4 +39,6 @@ public abstract class ApplicationStatus {
     }
 
     public abstract void accept(ApplicationStatusVisitor visitor);
+
+    public abstract StringKey getKey();
 }

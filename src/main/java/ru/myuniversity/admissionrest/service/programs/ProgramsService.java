@@ -11,6 +11,6 @@ public interface ProgramsService {
     void deleteProgram(int id);
     void updateProgram(int programId, @Nullable List<Integer> tests, @Nullable String title);
     List<Test> getProgramTests(int programId);
-    void createProgram(Program newProgramInfo);
+    Program createProgram(Program newProgramInfo);
     List<Program> getPrograms();
 }

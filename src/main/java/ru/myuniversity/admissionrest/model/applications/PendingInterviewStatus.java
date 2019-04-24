@@ -39,4 +39,9 @@ public class PendingInterviewStatus extends ApplicationStatus {
     public void accept(ApplicationStatusVisitor visitor) {
         visitor.visit(this);
     }
+
+    @Override
+    public StringKey getKey() {
+        return StringKey.PENDING_INTERVIEW;
+    }
 }

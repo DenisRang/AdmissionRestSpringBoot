@@ -8,4 +8,9 @@ public class InitialStatus extends ApplicationStatus {
     public void accept(ApplicationStatusVisitor visitor) {
         visitor.visit(this);
     }
+
+    @Override
+    public StringKey getKey() {
+        return StringKey.INITIAL;
+    }
 }
