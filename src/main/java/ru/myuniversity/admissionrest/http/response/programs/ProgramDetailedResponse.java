@@ -1,6 +1,6 @@
 package ru.myuniversity.admissionrest.http.response.programs;
 
-import ru.myuniversity.admissionrest.http.response.TestsResponseElement;
+import ru.myuniversity.admissionrest.http.response.tests.TestsResponseElement;
 import ru.myuniversity.admissionrest.model.programs.Program;
 import ru.myuniversity.admissionrest.model.test.Test;
 

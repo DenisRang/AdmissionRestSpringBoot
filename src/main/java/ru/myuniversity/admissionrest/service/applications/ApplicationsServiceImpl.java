@@ -26,4 +26,9 @@ public class ApplicationsServiceImpl implements ApplicationsService {
     public void setApplicationStatus(int applicationId, ApplicationStatus newStatus) {
         // TODO: implement
     }
+
+    @Override
+    public Application createApplication(Application newApplication) {
+        return newApplication; // TODO: repository
+    }
 }

@@ -8,7 +8,7 @@ public class Test {
     @NonNull
     private String title;
 
-    public Test(){
+    public Test() {
         // required
     }
 
