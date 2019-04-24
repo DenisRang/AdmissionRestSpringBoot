@@ -10,11 +10,18 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
+import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.converter.json.Jackson2ObjectMapperBuilder;
+import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
+import org.springframework.web.servlet.config.annotation.EnableWebMvc;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+
+import java.util.List;
 
 @EnableJpaRepositories(basePackages = "ru.myuniversity.admissionrest.repository")
 @Configuration
-public class Config {
+@EnableWebMvc
+public class Config implements WebMvcConfigurer {
 
     @Bean
     @Primary
@@ -25,5 +32,10 @@ public class Config {
                 .serializationInclusion(JsonInclude.Include.NON_NULL)
                 .propertyNamingStrategy(PropertyNamingStrategy.SNAKE_CASE)
                 .build();
+    }
+
+    @Override
+    public void configureMessageConverters(List<HttpMessageConverter<?>> converters) {
+        converters.add(new MappingJackson2HttpMessageConverter(customJson()));
     }
 }
