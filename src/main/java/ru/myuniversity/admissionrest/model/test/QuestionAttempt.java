@@ -10,4 +10,6 @@ public abstract class QuestionAttempt {
     public int getQuestionId() {
         return questionId;
     }
+
+    public abstract void accept(QuestionAttemptVisitor visitor);
 }

@@ -17,4 +17,9 @@ public class VariantsQuestionAttempt extends QuestionAttempt {
     public List<Integer> getChosenVariants() {
         return chosenVariants;
     }
+
+    @Override
+    public void accept(QuestionAttemptVisitor visitor) {
+        visitor.visit(this);
+    }
 }

@@ -15,4 +15,9 @@ public class TextQuestionAttempt extends QuestionAttempt {
     public String getAnswer() {
         return answer;
     }
+
+    @Override
+    public void accept(QuestionAttemptVisitor visitor) {
+        visitor.visit(this);
+    }
 }
