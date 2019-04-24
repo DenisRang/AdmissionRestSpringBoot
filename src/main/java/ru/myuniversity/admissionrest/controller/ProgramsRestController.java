@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.*;
 import ru.myuniversity.admissionrest.http.request.programs.ChangeProgramRequestBody;
 import ru.myuniversity.admissionrest.http.response.programs.ProgramDetailedResponse;
 import ru.myuniversity.admissionrest.http.response.programs.ProgramResponse;
+import ru.myuniversity.admissionrest.model.programs.Program;
 import ru.myuniversity.admissionrest.service.programs.ProgramsService;
 
 import java.util.List;
@@ -36,6 +37,11 @@ public class ProgramsRestController {
                 programsService.getProgram(programId),
                 programsService.getProgramTests(programId)
         );
+    }
+
+    @PostMapping("/programs")
+    public Program createProgram(@RequestBody ChangeProgramRequestBody newProgramRequestBody) {
+        return programsService.createProgram(new Program(newProgramRequestBody.getTitle()));
     }
 
     @PutMapping("/programs/{programId}")
