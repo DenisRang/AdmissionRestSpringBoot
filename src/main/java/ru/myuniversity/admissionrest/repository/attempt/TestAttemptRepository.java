@@ -11,6 +11,6 @@ import java.util.List;
 
 public interface TestAttemptRepository extends JpaRepository<TestAttemptEntity, Integer> {
 
-    @Query("SELECT testAttempt FROM TestAttemptEntity testAttempt WHERE testAttempt.user_id=:userId and testAttempt.test_id=:testId ")
-    List<TestAttemptEntity> findByUserAndTestId(@Param("userId") int userId, @Param("testId") int testId);
+    @Query("SELECT testAttempt FROM TestAttemptEntity testAttempt WHERE testAttempt.candidate=:userId and testAttempt.test=:testId ")
+    List<TestAttemptEntity> findByUserAndTestId(@Param("userId") Integer userId, @Param("testId") Integer testId);
 }
