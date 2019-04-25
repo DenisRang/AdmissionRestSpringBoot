@@ -11,9 +11,9 @@ import java.util.List;
 @Service
 public class ApplicationsServiceImpl implements ApplicationsService {
     @Override
-    public List<Application> getApplications(ApplicationStatus.StringKey statusFilter, String candidateNameFilter) {
-        // TODO: implementation with repository
-        return Collections.singletonList(new Application(1, 1, 1, Collections.singletonList(new InitialStatus())));
+    public List<Application> getApplications(ApplicationStatus.StringKey statusFilter, String candidateNameFilter, Integer candidateId) {
+        // TODO: repo
+        return Collections.singletonList(new Application(1, 1, candidateId, Collections.singletonList(new InitialStatus())));
     }
 
     @Override

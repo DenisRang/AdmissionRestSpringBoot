@@ -14,6 +14,7 @@ import ru.myuniversity.admissionrest.http.response.users.UserResponse;
 import ru.myuniversity.admissionrest.model.applications.Application;
 import ru.myuniversity.admissionrest.model.applications.ApplicationStatus;
 import ru.myuniversity.admissionrest.model.applications.ApplicationStatusPojoToResponseMapper;
+import ru.myuniversity.admissionrest.model.users.User;
 import ru.myuniversity.admissionrest.service.applications.ApplicationsService;
 import ru.myuniversity.admissionrest.service.programs.ProgramsService;
 import ru.myuniversity.admissionrest.service.users.UsersService;
@@ -53,11 +54,17 @@ public class ApplicationsRestController {
     }
 
     @GetMapping("/applications")
-    public List<ApplicationListResponseItem> getApplications(@RequestParam @Nullable String candidate, @RequestParam @Nullable ApplicationStatusName status) {
+    public List<ApplicationListResponseItem> getApplications(@RequestParam @Nullable String candidate, @RequestParam @Nullable ApplicationStatusName status, @RequestHeader("Authentication") String token) {
         ApplicationStatus.StringKey statusKey = null;
         if (status != null) statusKey = status.toPojoStatus();
 
-        List<Application> applications = applicationsService.getApplications(statusKey, candidate);
+        Integer candidateId = null;
+        User user = usersService.getUser(token);
+        if (user.getRole() == User.Role.CANDIDATE) {
+            candidateId = user.getId();
+        }
+
+        List<Application> applications = applicationsService.getApplications(statusKey, candidate, candidateId);
         return applications.stream()
                 .map(pojoApplication -> new ApplicationListResponseItem(
                         pojoApplication.getId(),
@@ -69,8 +76,11 @@ public class ApplicationsRestController {
     }
 
     @PostMapping("/application")
-    public ApplicationListResponseItem createApplication(@RequestBody CreateApplicationRequestBody newApplicationBody) {
-        // TODO: auth and service
-        return null;
+    public ApplicationListResponseItem createApplication(@RequestBody CreateApplicationRequestBody newApplicationBody, @RequestHeader("Authentication") String token) {
+        User user = usersService.getUser(token);
+        Application application =  applicationsService.
+                createApplication(new Application(newApplicationBody.getProgramId(), user.getId()));
+        ProgramResponse program = new ProgramResponse(programsService.getProgram(application.getProgramId()));
+        return new ApplicationListResponseItem(application.getId(), program, new UserResponse(user), ApplicationStatusPojoToResponseMapper.map(application.getStatus()));
     }
 }
