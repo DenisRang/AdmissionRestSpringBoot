@@ -77,23 +77,25 @@ public class TestRestController {
     public TestAttemptResponse getSubmittedAnswersInfo(@PathVariable int testId) {
 
        // return testService.getQuestions(testId);
+        return null;
     }
 
 
     @PostMapping("/tests/{testId}/questions/{questionId}/answer")
     public void submitAnswer(@PathVariable int testId, @PathVariable int questionId, @RequestBody NewAnswerRequestBody answerBody) {
-        if (answerBody.getTextAnswer() != null) {
-            testService.submitTextAnswer(testId, questionId, answerBody.getTextAnswer());
-        } else if (answerBody.getChosenVariantIds() != null) {
-            testService.submitVariantsListAnswer(testId, questionId, answerBody.getChosenVariantIds());
-        } else {
-            System.out.println("Incorrect body");
-        }
+//        if (answerBody.getTextAnswer() != null) {
+//            testService.submitTextAnswer(testId, questionId, answerBody.getTextAnswer());
+//        } else if (answerBody.getChosenVariantIds() != null) {
+//            testService.submitVariantsListAnswer(testId, questionId, answerBody.getChosenVariantIds());
+//        } else {
+//            System.out.println("Incorrect body");
+//        }
     }
 
     @PutMapping("/tests/{testId}/finish")
     public GradeResponse finishTestAttempt(@PathVariable int testId) {
-        return new GradeResponse(testService.finishTest(testId));
+       // return new GradeResponse(testService.finishTest(testId));
+        return null;
     }
 
     private Question constructQuestionToUpdate(int questionId, QuestionRequestBody questionBody) {
