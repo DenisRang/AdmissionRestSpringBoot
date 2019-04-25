@@ -4,6 +4,7 @@ import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.Date;
 
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
@@ -17,11 +18,7 @@ public class RejectedStatusEntity extends ApplicationStatusEntity {
     private boolean fixable;
 
 
-    public RejectedStatusEntity(ApplicationEntity application, LocalDateTime createDateTime) {
-        super(application, createDateTime);
-    }
-
-    public RejectedStatusEntity(ApplicationEntity application, LocalDateTime createDateTime, String reason, boolean fixable) {
+    public RejectedStatusEntity(ApplicationEntity application, Date createDateTime, String reason, boolean fixable) {
         super(application, createDateTime);
         this.reason = reason;
         this.fixable = fixable;
@@ -49,5 +46,10 @@ public class RejectedStatusEntity extends ApplicationStatusEntity {
                 "reason='" + reason + '\'' +
                 ", fixable=" + fixable +
                 '}';
+    }
+
+    @Override
+    public void accept(ApplicationStatusEntityVisitor visitor) {
+        visitor.visit(this);
     }
 }

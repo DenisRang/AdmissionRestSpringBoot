@@ -6,10 +6,11 @@ import ru.myuniversity.admissionrest.entity.user.StaffEntity;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.Date;
 
 @Entity
 @Table(name = "accepted_status")
-public class AcceptedStatusEntity extends ApplicationStatusEntity{
+public class AcceptedStatusEntity extends ApplicationStatusEntity {
 
     @ManyToOne(fetch = FetchType.LAZY,
             cascade = {CascadeType.DETACH,
@@ -22,11 +23,7 @@ public class AcceptedStatusEntity extends ApplicationStatusEntity{
     @Column(name = "comment")
     private String comment;
 
-    public AcceptedStatusEntity(ApplicationEntity application, LocalDateTime createDateTime) {
-        super(application, createDateTime);
-    }
-
-    public AcceptedStatusEntity(ApplicationEntity application, LocalDateTime createDateTime, StaffEntity staff, String comment) {
+    public AcceptedStatusEntity(ApplicationEntity application, Date createDateTime, StaffEntity staff, String comment) {
         super(application, createDateTime);
         this.staff = staff;
         this.comment = comment;
@@ -54,5 +51,10 @@ public class AcceptedStatusEntity extends ApplicationStatusEntity{
                 "staff=" + staff +
                 ", comment='" + comment + '\'' +
                 '}';
+    }
+
+    @Override
+    public void accept(ApplicationStatusEntityVisitor visitor) {
+        visitor.visit(this);
     }
 }
