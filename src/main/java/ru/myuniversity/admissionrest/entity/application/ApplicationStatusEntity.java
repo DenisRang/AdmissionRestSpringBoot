@@ -2,14 +2,17 @@ package ru.myuniversity.admissionrest.entity.application;
 
 import org.hibernate.annotations.CreationTimestamp;
 import ru.myuniversity.admissionrest.entity.user.CandidateEntity;
+import ru.myuniversity.admissionrest.model.applications.ApplicationStatusVisitor;
 
 import javax.persistence.*;
+import java.io.DataInputStream;
 import java.time.LocalDateTime;
+import java.util.Date;
 
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
 @Table(name = "application_status")
-public class ApplicationStatusEntity {
+public abstract class ApplicationStatusEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
@@ -25,9 +28,9 @@ public class ApplicationStatusEntity {
 
     @Column(name = "changed")
     @CreationTimestamp
-    private LocalDateTime createDateTime;
+    private Date createDateTime;
 
-    public ApplicationStatusEntity(ApplicationEntity application, LocalDateTime createDateTime) {
+    public ApplicationStatusEntity(ApplicationEntity application, Date createDateTime) {
         this.application = application;
         this.createDateTime = createDateTime;
     }
@@ -57,11 +60,14 @@ public class ApplicationStatusEntity {
         this.application = application;
     }
 
-    public LocalDateTime getCreateDateTime() {
+    public Date getCreateDateTime() {
         return createDateTime;
     }
 
-    public void setCreateDateTime(LocalDateTime createDateTime) {
+    public void setCreateDateTime(Date createDateTime) {
         this.createDateTime = createDateTime;
     }
+
+    public abstract void accept(ApplicationStatusEntityVisitor visitor);
+
 }
