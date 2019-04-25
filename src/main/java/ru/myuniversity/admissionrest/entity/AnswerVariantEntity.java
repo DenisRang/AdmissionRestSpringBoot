@@ -1,6 +1,10 @@
 package ru.myuniversity.admissionrest.entity;
 
+import ru.myuniversity.admissionrest.entity.attempt.QuestionAttemptEntity;
+
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "answer_variant")
@@ -9,6 +13,9 @@ public class AnswerVariantEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private int id;
+
+    @ManyToMany(mappedBy = "answerVariants")
+    private List<QuestionAttemptEntity> questionAttempts = new ArrayList<>();
 
     @Column(name = "text")
     private String text;
@@ -19,7 +26,8 @@ public class AnswerVariantEntity {
     public AnswerVariantEntity() {
     }
 
-    public AnswerVariantEntity(String text, boolean isCorrect) {
+    public AnswerVariantEntity(List<QuestionAttemptEntity> questionAttempts, String text, boolean isCorrect) {
+        this.questionAttempts = questionAttempts;
         this.text = text;
         this.isCorrect = isCorrect;
     }
@@ -48,10 +56,19 @@ public class AnswerVariantEntity {
         isCorrect = correct;
     }
 
+    public List<QuestionAttemptEntity> getQuestionAttempts() {
+        return questionAttempts;
+    }
+
+    public void setQuestionAttempts(List<QuestionAttemptEntity> questionAttempts) {
+        this.questionAttempts = questionAttempts;
+    }
+
     @Override
     public String toString() {
         return "AnswerVariantEntity{" +
                 "id=" + id +
+                ", questionAttempts=" + questionAttempts +
                 ", text='" + text + '\'' +
                 ", isCorrect=" + isCorrect +
                 '}';

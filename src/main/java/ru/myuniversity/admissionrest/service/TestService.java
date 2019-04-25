@@ -2,6 +2,8 @@ package ru.myuniversity.admissionrest.service;
 
 import org.springframework.lang.Nullable;
 import ru.myuniversity.admissionrest.model.question.Question;
+import ru.myuniversity.admissionrest.model.test.Attempt;
+import ru.myuniversity.admissionrest.model.test.QuestionAttempt;
 import ru.myuniversity.admissionrest.model.test.Test;
 
 import java.util.List;
@@ -61,10 +63,12 @@ public interface TestService {
     void deleteQuestion(int testId, int questionId);
 
     //Tests passing
-    void submitTextAnswer(int testId, int questionId, String answer);
+    Attempt getQuestionAttempts( int userId, int testId);
 
-    void submitVariantsListAnswer(int testId, int questionId, List<Integer> chosenVariants);
+    void submitTextAnswer( int userId, int testId, int questionId, String answer);
 
-    double finishTest(int testId);
+    void submitVariantsListAnswer(int userId, int testId, int questionId, List<Integer> chosenVariants);
+
+    double finishTest( int userId, int testId);
 
 }

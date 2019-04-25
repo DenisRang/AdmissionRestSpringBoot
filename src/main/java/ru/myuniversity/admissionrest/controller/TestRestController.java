@@ -7,6 +7,7 @@ import ru.myuniversity.admissionrest.http.request.answer.NewAnswerRequestBody;
 import ru.myuniversity.admissionrest.http.request.question.QuestionRequestBody;
 import ru.myuniversity.admissionrest.http.request.question.QuestionsRequestToPOJOMapper;
 import ru.myuniversity.admissionrest.http.response.GradeResponse;
+import ru.myuniversity.admissionrest.http.response.tests.TestAttemptResponse;
 import ru.myuniversity.admissionrest.http.response.tests.TestsResponseElement;
 import ru.myuniversity.admissionrest.model.question.Question;
 import ru.myuniversity.admissionrest.model.test.Test;
@@ -71,6 +72,13 @@ public class TestRestController {
     public void deleteQuestion(@PathVariable int testId, @PathVariable int questionId) {
         testService.deleteQuestion(testId, questionId);
     }
+
+    @GetMapping("/tests/{testId}/attempt")
+    public TestAttemptResponse getSubmittedAnswersInfo(@PathVariable int testId) {
+
+       // return testService.getQuestions(testId);
+    }
+
 
     @PostMapping("/tests/{testId}/questions/{questionId}/answer")
     public void submitAnswer(@PathVariable int testId, @PathVariable int questionId, @RequestBody NewAnswerRequestBody answerBody) {

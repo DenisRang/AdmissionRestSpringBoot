@@ -1,6 +1,7 @@
 package ru.myuniversity.admissionrest.entity;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -22,7 +23,7 @@ public class ProgramEntity {
             joinColumns = @JoinColumn(name = "program_id"),
             inverseJoinColumns = @JoinColumn(name = "test_id")
     )
-    private List<TestEntity> tests;
+    private List<TestEntity> tests=new ArrayList<>();
 
     public ProgramEntity() {
     }
