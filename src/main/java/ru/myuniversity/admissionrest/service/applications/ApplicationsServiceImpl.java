@@ -46,7 +46,7 @@ public class ApplicationsServiceImpl implements ApplicationsService {
     }
 
     @Override
-    public List<Application> getApplications(ApplicationStatus.StringKey statusFilter, String candidateNameFilter) {
+    public List<Application> getApplications(ApplicationStatus.StringKey statusFilter, String candidateNameFilter, Integer candidateId) {
         return applicationRepository.findAll().stream()
                 .map(applicationEntity -> {
                     List<ApplicationStatus> history = applicationStatusRepository.findAllByApplication(applicationEntity)
@@ -57,6 +57,12 @@ public class ApplicationsServiceImpl implements ApplicationsService {
                             applicationEntity.getProgram().getId(),
                             applicationEntity.getCandidateEntity().getId(),
                             history);
+                })
+                .filter(application -> {
+                    if (candidateId != null)
+                        return application.getCandidateId() == candidateId;
+                    else
+                        return true;
                 }).collect(Collectors.toList());
     }
 
