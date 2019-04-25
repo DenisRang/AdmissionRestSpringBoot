@@ -7,7 +7,8 @@ import ru.myuniversity.admissionrest.http.request.answer.NewAnswerRequestBody;
 import ru.myuniversity.admissionrest.http.request.question.QuestionRequestBody;
 import ru.myuniversity.admissionrest.http.request.question.QuestionsRequestToPOJOMapper;
 import ru.myuniversity.admissionrest.http.response.GradeResponse;
-import ru.myuniversity.admissionrest.http.response.TestsResponseElement;
+import ru.myuniversity.admissionrest.http.response.tests.TestAttemptResponse;
+import ru.myuniversity.admissionrest.http.response.tests.TestsResponseElement;
 import ru.myuniversity.admissionrest.model.question.Question;
 import ru.myuniversity.admissionrest.model.test.Test;
 import ru.myuniversity.admissionrest.service.TestService;
@@ -72,20 +73,29 @@ public class TestRestController {
         testService.deleteQuestion(testId, questionId);
     }
 
+    @GetMapping("/tests/{testId}/attempt")
+    public TestAttemptResponse getSubmittedAnswersInfo(@PathVariable int testId) {
+
+       // return testService.getQuestions(testId);
+        return null;
+    }
+
+
     @PostMapping("/tests/{testId}/questions/{questionId}/answer")
     public void submitAnswer(@PathVariable int testId, @PathVariable int questionId, @RequestBody NewAnswerRequestBody answerBody) {
-        if (answerBody.getTextAnswer() != null) {
-            testService.submitTextAnswer(testId, questionId, answerBody.getTextAnswer());
-        } else if (answerBody.getChosenVariantIds() != null) {
-            testService.submitVariantsListAnswer(testId, questionId, answerBody.getChosenVariantIds());
-        } else {
-            System.out.println("Incorrect body");
-        }
+//        if (answerBody.getTextAnswer() != null) {
+//            testService.submitTextAnswer(testId, questionId, answerBody.getTextAnswer());
+//        } else if (answerBody.getChosenVariantIds() != null) {
+//            testService.submitVariantsListAnswer(testId, questionId, answerBody.getChosenVariantIds());
+//        } else {
+//            System.out.println("Incorrect body");
+//        }
     }
 
     @PutMapping("/tests/{testId}/finish")
     public GradeResponse finishTestAttempt(@PathVariable int testId) {
-        return new GradeResponse(testService.finishTest(testId));
+       // return new GradeResponse(testService.finishTest(testId));
+        return null;
     }
 
     private Question constructQuestionToUpdate(int questionId, QuestionRequestBody questionBody) {

@@ -38,9 +38,8 @@ public class UsersRestController {
     }
 
     @GetMapping("/users/me")
-    public UserResponse getMe() {
-        // TODO: fix with authorization
-        return getUser(1);
+    public UserResponse getMe(@RequestHeader("Authorization") String token) {
+        return new UserResponse(usersService.getUser(token));
     }
 
     @PostMapping("/users/new")

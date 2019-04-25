@@ -1,44 +1,89 @@
 package ru.myuniversity.admissionrest.service.programs;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import ru.myuniversity.admissionrest.entity.ProgramEntity;
+import ru.myuniversity.admissionrest.entity.TestEntity;
 import ru.myuniversity.admissionrest.model.programs.Program;
 import ru.myuniversity.admissionrest.model.test.Test;
+import ru.myuniversity.admissionrest.repository.ProgramRepository;
+import ru.myuniversity.admissionrest.repository.TestRepository;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class ProgramsServiceImpl implements ProgramsService {
+    private ProgramRepository programRepository;
+    private TestRepository testRepository;
+
+    @Autowired
+    public ProgramsServiceImpl(ProgramRepository programRepository, TestRepository testRepository) {
+        this.programRepository = programRepository;
+        this.testRepository = testRepository;
+    }
+
     @Override
     public Program getProgram(int id) {
-        // TODO: Repository
-        return new Program(id, "CS Bachelor");
+        Optional<ProgramEntity> optional = programRepository.findById(id);
+        if (optional.isPresent()) {
+            ProgramEntity programEntity = optional.get();
+            return new Program(programEntity.getId(), programEntity.getTitle());
+        }
+        return null;
     }
 
     @Override
     public void deleteProgram(int id) {
-        // TODO: Repository
+        programRepository.deleteById(id);
     }
 
     @Override
-    public void createProgram(Program newProgramInfo) {
-        // TODO: Repository
+    public Program createProgram(Program newProgramInfo) {
+        ProgramEntity programEntity = programRepository.save(new ProgramEntity(newProgramInfo.getTitle(), null));
+        return new Program(programEntity.getId(), programEntity.getTitle());
     }
 
     @Override
     public List<Program> getPrograms() {
-        // TODO: Repository
-        return Collections.singletonList(new Program(1, "CS Bachelor"));
+        return programRepository.findAll()
+                .stream()
+                .map(programEntity -> new Program(programEntity.getId(), programEntity.getTitle()))
+                .collect(Collectors.toList());
     }
 
     @Override
     public void updateProgram(int programId, List<Integer> tests, String title) {
-        // TODO: Repository
+        Optional<ProgramEntity> optProgramEntity = programRepository.findById(programId);
+        if (optProgramEntity.isPresent()) {
+            ProgramEntity programEntity = optProgramEntity.get();
+            programEntity.setTitle(title);
+            List<TestEntity> testEntities = new ArrayList<>();
+            Optional<TestEntity> optTestEntity = null;
+            for (Integer testId : tests) {
+                optTestEntity = testRepository.findById(testId);
+                if (optTestEntity.isPresent()) {
+                    testEntities.add(optTestEntity.get());
+                }
+            }
+            programEntity.setTests(testEntities);
+            programRepository.save(programEntity);
+        }
     }
 
     @Override
     public List<Test> getProgramTests(int programId) {
-        // TODO: Repository
-        return Collections.singletonList(new Test(1, "English — Intermediate"));
+        Optional<ProgramEntity> optProgramEntity = programRepository.findById(programId);
+        if (optProgramEntity.isPresent()) {
+            return optProgramEntity.get()
+                    .getTests()
+                    .stream()
+                    .map(testEntity -> new Test(testEntity.getId(), testEntity.getTitle()))
+                    .collect(Collectors.toList());
+        }
+        return null;
     }
 }

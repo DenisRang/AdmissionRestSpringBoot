@@ -1,6 +1,8 @@
 package ru.myuniversity.admissionrest.entity.question;
 
 import ru.myuniversity.admissionrest.entity.AnswerVariantEntity;
+import ru.myuniversity.admissionrest.entity.ProgramEntity;
+import ru.myuniversity.admissionrest.entity.attempt.QuestionAttemptEntity;
 
 import javax.persistence.*;
 import java.util.ArrayList;

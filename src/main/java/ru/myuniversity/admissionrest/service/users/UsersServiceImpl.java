@@ -11,9 +11,7 @@ import ru.myuniversity.admissionrest.repository.user.CandidateRepository;
 import ru.myuniversity.admissionrest.repository.user.ManagerRepository;
 import ru.myuniversity.admissionrest.repository.user.StaffRepository;
 
-import java.util.Collections;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -21,6 +19,13 @@ public class UsersServiceImpl implements UsersService {
     private CandidateRepository candidateRepository;
     private ManagerRepository managerRepository;
     private StaffRepository staffRepository;
+
+    private Map<String, Integer> usersByKeys = new HashMap<String, Integer>() {{
+        put("5dc757704dac085db29f3e9ea295e8b5a91ac3c5", 1);
+        put("f1b5a91d4d6ad523f2610114591c007e75d15084", 2);
+        put("7fc7f9e73856bd42a257ce7aac54fc3687f7ad60", 5);
+        put("9b94238fa82c65ae69e7c1a4262f153321109338", 8);
+    }};
 
     @Autowired
     public UsersServiceImpl(CandidateRepository candidateRepository, ManagerRepository managerRepository, StaffRepository staffRepository) {
@@ -99,5 +104,15 @@ public class UsersServiceImpl implements UsersService {
                     User.Role.CANDIDATE);
         }
         return null;
+    }
+
+    @Override
+    public User getUser(String token) {
+        Integer id = usersByKeys.get(token);
+
+        if (id != null)
+            return getUser(id);
+        else
+            return null;
     }
 }

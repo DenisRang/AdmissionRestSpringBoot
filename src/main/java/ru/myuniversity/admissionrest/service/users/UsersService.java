@@ -9,4 +9,5 @@ public interface UsersService {
     List<User> getUsers(@Nullable String name, @Nullable User.Role role);
     void createUser(String name, User.Role role, String email);
     User getUser(int id);
+    User getUser(String token);
 }

@@ -4,7 +4,7 @@ import javax.persistence.Entity;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "staff")
+@Table(name = "candidate")
 public class CandidateEntity extends UserEntity {
     public CandidateEntity() {
     }

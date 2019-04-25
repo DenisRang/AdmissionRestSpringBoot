@@ -4,7 +4,7 @@ import javax.persistence.Entity;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "staff")
+@Table(name = "manager")
 public class ManagerEntity extends UserEntity {
     public ManagerEntity() {
     }

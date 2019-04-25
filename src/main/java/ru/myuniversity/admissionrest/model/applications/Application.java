@@ -1,5 +1,6 @@
 package ru.myuniversity.admissionrest.model.applications;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -7,7 +8,7 @@ public class Application {
     private int id;
     private int programId;
     private int candidateId;
-    private List<ApplicationStatus> history;
+    private List<ApplicationStatus> history=new ArrayList<>();
 
     public Application(int id, int programId, int candidateId, List<ApplicationStatus> history) {
         this.id = id;
@@ -20,7 +21,22 @@ public class Application {
         this.programId = programId;
         this.candidateId = candidateId;
         this.id = -1;
-        this.history = Collections.singletonList(new InitialStatus());
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public void setProgramId(int programId) {
+        this.programId = programId;
+    }
+
+    public void setCandidateId(int candidateId) {
+        this.candidateId = candidateId;
+    }
+
+    public void setHistory(List<ApplicationStatus> history) {
+        this.history = history;
     }
 
     public int getId() {
