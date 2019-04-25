@@ -54,7 +54,7 @@ public class ApplicationsRestController {
     }
 
     @GetMapping("/applications")
-    public List<ApplicationListResponseItem> getApplications(@RequestParam @Nullable String candidate, @RequestParam @Nullable ApplicationStatusName status, @RequestHeader("Authentication") String token) {
+    public List<ApplicationListResponseItem> getApplications(@RequestParam @Nullable String candidate, @RequestParam @Nullable ApplicationStatusName status, @RequestHeader("Authorization") String token) {
         ApplicationStatus.StringKey statusKey = null;
         if (status != null) statusKey = status.toPojoStatus();
 
@@ -76,7 +76,7 @@ public class ApplicationsRestController {
     }
 
     @PostMapping("/application")
-    public ApplicationListResponseItem createApplication(@RequestBody CreateApplicationRequestBody newApplicationBody, @RequestHeader("Authentication") String token) {
+    public ApplicationListResponseItem createApplication(@RequestBody CreateApplicationRequestBody newApplicationBody, @RequestHeader("Authorization") String token) {
         User user = usersService.getUser(token);
         Application application =  applicationsService.
                 createApplication(new Application(newApplicationBody.getProgramId(), user.getId()));
