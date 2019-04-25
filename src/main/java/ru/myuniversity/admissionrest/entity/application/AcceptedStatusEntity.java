@@ -23,6 +23,10 @@ public class AcceptedStatusEntity extends ApplicationStatusEntity {
     @Column(name = "comment")
     private String comment;
 
+    public AcceptedStatusEntity(ApplicationEntity application, Date createDateTime) {
+        super(application, createDateTime);
+    }
+
     public AcceptedStatusEntity(ApplicationEntity application, Date createDateTime, StaffEntity staff, String comment) {
         super(application, createDateTime);
         this.staff = staff;

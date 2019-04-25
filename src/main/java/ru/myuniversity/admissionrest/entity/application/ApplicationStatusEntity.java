@@ -30,6 +30,9 @@ public abstract class ApplicationStatusEntity {
     @CreationTimestamp
     private Date createDateTime;
 
+    public ApplicationStatusEntity() {
+    }
+
     public ApplicationStatusEntity(ApplicationEntity application, Date createDateTime) {
         this.application = application;
         this.createDateTime = createDateTime;

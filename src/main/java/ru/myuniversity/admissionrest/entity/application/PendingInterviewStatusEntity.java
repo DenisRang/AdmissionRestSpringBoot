@@ -24,6 +24,7 @@ public class PendingInterviewStatusEntity extends ApplicationStatusEntity {
     @CreationTimestamp
     private Date date;
 
+
     public PendingInterviewStatusEntity(ApplicationEntity application, Date createDateTime, StaffEntity staffEntity, Date date) {
         super(application, createDateTime);
         this.staffEntity = staffEntity;

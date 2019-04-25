@@ -75,7 +75,7 @@ public class ApplicationsRestController {
                 .collect(Collectors.toList());
     }
 
-    @PostMapping("/application")
+    @PostMapping("/applications")
     public ApplicationListResponseItem createApplication(@RequestBody CreateApplicationRequestBody newApplicationBody, @RequestHeader("Authorization") String token) {
         User user = usersService.getUser(token);
         Application application =  applicationsService.

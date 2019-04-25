@@ -12,6 +12,9 @@ public class InitialStatusEntity extends ApplicationStatusEntity {
         super(application, createDateTime);
     }
 
+    public InitialStatusEntity() {
+    }
+
     @Override
     public void accept(ApplicationStatusEntityVisitor visitor) {
         visitor.visit(this);
