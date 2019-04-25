@@ -68,13 +68,21 @@ public class ApplicationsServiceImpl implements ApplicationsService {
 
     @Override
     public Application getApplication(int id) {
-        // TODO: repository
-        return new Application(id, 1, 1, Collections.singletonList(new InitialStatus(new Date())));
+        ApplicationEntity applicationEntity=applicationRepository.findById(id).get();
+        List<ApplicationStatus> history = applicationStatusRepository.findAllByApplication(applicationEntity)
+                .stream()
+                .map(applicationStatusEntity -> ApplicationStatusToPojoMapper.map(applicationStatusEntity))
+                .collect(Collectors.toList());
+        return new Application(applicationEntity.getId(),
+                applicationEntity.getProgram().getId(),
+                applicationEntity.getCandidateEntity().getId(),
+                history);
     }
 
     @Override
     public void setApplicationStatus(int applicationId, ApplicationStatus newStatus) {
-        // TODO: implement
+        ApplicationEntity applicationEntity=applicationRepository.findById(applicationId).get();
+
     }
 
     @Override
