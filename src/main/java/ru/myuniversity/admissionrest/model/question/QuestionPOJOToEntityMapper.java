@@ -44,7 +44,7 @@ public class QuestionPOJOToEntityMapper implements QuestionVisitor {
         return variants.stream()
                 .collect(ArrayList::new,
                         (set, item) -> {
-                            AnswerVariantEntity answerVariantEntity = new AnswerVariantEntity(item.getText(), isCorrect);
+                            AnswerVariantEntity answerVariantEntity = new AnswerVariantEntity(null,item.getText(), isCorrect);
                             set.add(answerVariantEntity);
                         },
                         AbstractCollection::addAll

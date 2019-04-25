@@ -137,7 +137,13 @@ public class TestServiceImpl implements TestService {
 
     @Override
     public void submitTextAnswer(int userId, int testId, int questionId, String answer) {
-
+        Optional<TestAttemptEntity> optTestAttemptEntity = testAttemptRepository.findByUserAndTestId(userId, testId)
+                .stream()
+                .findFirst();
+        if (optTestAttemptEntity.isPresent()) {
+            TestAttemptEntity testAttemptEntity = optTestAttemptEntity.get();
+          //  testAttemptEntity.
+        }
        // QuestionAttemptEntity questionAttemptEntity=new QuestionAttemptEntity()
     }
 
